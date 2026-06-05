@@ -27,12 +27,27 @@ public class TodoList {
       return;
     }
 
-    for (TodoItem todo : list) {
-      String taskStatus = todo.isCompleted() ? "[X]" : "[ ]";
-      String taskId = "(" + todo.getId() + ")";
-      String taskTitle = todo.getTitle();
-      System.out.println(taskStatus + " " + taskTitle + " " + taskId);
+    list.forEach(TodoItem::printInfo);
+  }
+
+  public void printNotCompletedList() {
+    if (list.isEmpty()) {
+      System.out.println("List is empty.");
+      return;
     }
+
+    boolean hasNotCompleted = list.stream()
+        .anyMatch(todo -> !todo.isCompleted());
+
+    if (!hasNotCompleted) {
+      System.out.println("All tasks are completed.");
+      return;
+    }
+
+    list.stream()
+        .filter(todo -> !todo.isCompleted())
+        .forEach(TodoItem::printInfo);
+
   }
 
   public void createTodo(String todo) {

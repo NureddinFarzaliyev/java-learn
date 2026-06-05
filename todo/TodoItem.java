@@ -26,4 +26,15 @@ public class TodoItem {
   public int getId() {
     return id;
   }
+
+  public String getInfo() {
+    String taskStatus = completed ? "[X]" : "[ ]";
+    String taskId = "(" + id + ")";
+    String taskTitle = title;
+    return taskStatus + " " + taskTitle + " " + taskId;
+  }
+
+  public void printInfo() {
+    System.out.println(getInfo());
+  }
 }
