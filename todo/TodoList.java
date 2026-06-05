@@ -41,29 +41,13 @@ public class TodoList {
   }
 
   public void toggleTodo(int id) {
-    if (id < 0) {
-      return;
-    }
-
-    for (TodoItem todoItem : list) {
-      if (todoItem.getId() == id) {
-        todoItem.toggleStatus();
-        break;
-      }
-    }
+    list.stream()
+        .filter(todo -> todo.getId() == id)
+        .findFirst()
+        .ifPresent(TodoItem::toggleStatus);
   }
 
   public void removeTodo(int id) {
-    if (id < 0) {
-      return;
-    }
-
-    for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).getId() == id) {
-        list.remove(i);
-        break;
-      }
-    }
+    list.removeIf(todo -> todo.getId() == id);
   }
-
 }
