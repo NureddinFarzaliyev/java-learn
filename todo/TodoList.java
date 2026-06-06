@@ -27,7 +27,7 @@ public class TodoList {
       return;
     }
 
-    list.forEach(TodoItem::printInfo);
+    list.forEach(System.out::println);
   }
 
   public void printNotCompletedList() {
@@ -46,7 +46,7 @@ public class TodoList {
 
     list.stream()
         .filter(todo -> !todo.isCompleted())
-        .forEach(TodoItem::printInfo);
+        .forEach(System.out::println);
 
   }
 

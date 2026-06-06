@@ -27,14 +27,11 @@ public class TodoItem {
     return id;
   }
 
-  public String getInfo() {
+  @Override
+  public String toString() {
     String taskStatus = completed ? "[X]" : "[ ]";
     String taskId = "(" + id + ")";
     String taskTitle = title;
     return taskStatus + " " + taskTitle + " " + taskId;
-  }
-
-  public void printInfo() {
-    System.out.println(getInfo());
   }
 }
