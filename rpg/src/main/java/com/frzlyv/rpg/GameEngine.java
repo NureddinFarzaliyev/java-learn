@@ -1,7 +1,5 @@
 package com.frzlyv.rpg;
 
-import java.util.Scanner;
-
 import com.frzlyv.rpg.enums.Screen;
 
 /**
@@ -9,22 +7,29 @@ import com.frzlyv.rpg.enums.Screen;
  */
 public class GameEngine {
 
-  private Scanner scanner = new Scanner(System.in);
-
-  private Player player;
+  private Interaction interaction;
+  private Player player = new Player();
   private Screen screen = Screen.HOME;
 
   private boolean isRunning = true;
 
-  public GameEngine(Player player) {
-    this.player = player;
+  public GameEngine(Interaction interaction) {
+    this.interaction = interaction;
   }
 
   public void start() {
     System.out.println("Welcome to the game!");
-    System.out.println(screen);
-    var choice = scanner.nextLine();
-    System.out.println(choice);
+
+    while (isRunning) {
+      System.out.println(screen);
+      var choice = interaction.getSafeIntInput();
+
+      if (choice == 0) {
+        isRunning = false;
+      } else if (choice == -1) {
+        isRunning = false;
+      }
+    }
 
     // System.out.println(player);
     // System.out.println(player.getInventory());
