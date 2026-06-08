@@ -14,6 +14,13 @@ public class ScreenMenu {
     this.options = options;
   }
 
+  public ScreenMenuOption getOption(int number) {
+    return options.stream()
+        .filter(o -> o.getNumber() == number)
+        .findFirst()
+        .orElse(null);
+  }
+
   @Override
   public String toString() {
     return options.stream()

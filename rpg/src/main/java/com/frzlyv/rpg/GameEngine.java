@@ -23,16 +23,16 @@ public class GameEngine {
     while (isRunning) {
       System.out.println(screen);
       var choice = interaction.getSafeIntInput();
-
-      if (choice == 0) {
-        isRunning = false;
-      } else if (choice == -1) {
-        isRunning = false;
+      if (choice == -1) {
+        System.out.println("Wrong input.");
+      } else {
+        var option = screen.getMenu().getOption(choice);
+        if (option != null) {
+          option.execute(player);
+        } else {
+          System.out.println("Wrong input.");
+        }
       }
     }
-
-    // System.out.println(player);
-    // System.out.println(player.getInventory());
   }
-
 }
