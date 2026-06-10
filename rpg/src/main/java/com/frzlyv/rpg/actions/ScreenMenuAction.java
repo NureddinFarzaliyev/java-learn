@@ -1,10 +1,10 @@
 package com.frzlyv.rpg.actions;
 
-import com.frzlyv.rpg.Player;
+import com.frzlyv.rpg.GameContext;
 
 /**
  * ScreenMenuAction
  */
 public interface ScreenMenuAction {
-  void execute(Player player);
+  void execute(GameContext context);
 }

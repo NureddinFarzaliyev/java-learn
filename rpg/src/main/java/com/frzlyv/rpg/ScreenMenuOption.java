@@ -17,9 +17,9 @@ public class ScreenMenuOption {
     this.action = action;
   }
 
-  public void execute(Player player) {
+  public void execute(GameContext context) {
     if (action != null) {
-      action.execute(player);
+      action.execute(context);
     }
   }
 

@@ -1,34 +1,29 @@
 package com.frzlyv.rpg;
 
-import com.frzlyv.rpg.enums.Screen;
-
 /**
  * GameEngine
  */
 public class GameEngine {
 
-  private Interaction interaction;
-  private Player player = new Player();
-  private Screen screen = Screen.HOME;
-
-  private boolean isRunning = true;
+  private GameContext context;
 
   public GameEngine(Interaction interaction) {
-    this.interaction = interaction;
+    var player = new Player();
+    context = new GameContext(player, interaction);
   }
 
   public void start() {
     System.out.println("Welcome to the game!");
 
-    while (isRunning) {
-      System.out.println(screen);
-      var choice = interaction.getSafeIntInput();
+    while (context.isRunning()) {
+      System.out.println(context.getCurrentScreen());
+      var choice = context.getInteraction().getSafeIntInput();
       if (choice == -1) {
         System.out.println("Wrong input.");
       } else {
-        var option = screen.getMenu().getOption(choice);
+        var option = context.getCurrentScreen().getMenu().getOption(choice);
         if (option != null) {
-          option.execute(player);
+          option.execute(context);
         } else {
           System.out.println("Wrong input.");
         }
