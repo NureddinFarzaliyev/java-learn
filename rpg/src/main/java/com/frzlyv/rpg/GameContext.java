@@ -11,6 +11,7 @@ public class GameContext {
   private Screen currentScreen;
   private Interaction interaction;
   private boolean running;
+  private BattleEngine currentBattle;
 
   public GameContext(Player player, Interaction interaction) {
     this.player = player;
@@ -41,5 +42,13 @@ public class GameContext {
 
   public void setRunning(boolean running) {
     this.running = running;
+  }
+
+  public void setCurrentBattle(BattleEngine battle) {
+    this.currentBattle = battle;
+  }
+
+  public BattleEngine getCurrentBattle() {
+    return currentBattle;
   }
 }

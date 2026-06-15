@@ -17,6 +17,9 @@ public class GameEngine {
 
     while (context.isRunning()) {
       System.out.println(context.getCurrentScreen());
+      if (context.getCurrentBattle() != null) {
+        System.out.println(context.getCurrentBattle());
+      }
       var choice = context.getInteraction().getSafeIntInput();
       if (choice == -1) {
         System.out.println("Wrong input.");

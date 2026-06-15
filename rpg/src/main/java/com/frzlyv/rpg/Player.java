@@ -10,7 +10,7 @@ public class Player extends Creature {
   private PlayerInventory inventory;
 
   public Player() {
-    super("Player", CreatureType.PLAYER, 100, 0, 0, 0.05);
+    super("Player", CreatureType.PLAYER, 100, 0, 15, 0.001, 200);
 
     var defaultWeapon = new Weapon("Wooden Sword", 5);
     var defaultArmor = new Armor("Wooden Armor", 5);
@@ -21,5 +21,4 @@ public class Player extends Creature {
   public PlayerInventory getInventory() {
     return inventory;
   }
-
 }
