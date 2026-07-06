@@ -48,8 +48,20 @@ public class Creature {
     return coins;
   }
 
+  public void setCoins(int amount) {
+    this.coins = amount;
+  }
+
   public int getCurrentHP() {
     return currentHP;
+  }
+
+  public int getMaxHP() {
+    return maxHP;
+  }
+
+  public void setCurrentHP(int amount) {
+    this.currentHP = amount;
   }
 
   public boolean isCrit() {

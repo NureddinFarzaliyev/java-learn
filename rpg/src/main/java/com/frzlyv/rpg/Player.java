@@ -21,4 +21,12 @@ public class Player extends Creature {
   public PlayerInventory getInventory() {
     return inventory;
   }
+
+  public void increaseHP(int amount) {
+    setCurrentHP(Math.min(getCurrentHP() + amount, getMaxHP()));
+  }
+
+  public void decreaseCoins(int amount) {
+    setCoins(Math.max(getCoins() - amount, 0));
+  }
 }
