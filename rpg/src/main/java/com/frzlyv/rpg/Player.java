@@ -33,4 +33,19 @@ public class Player extends Creature {
   public void increaseCoins(int amount) {
     setCoins(getCoins() + amount);
   }
+
+  @Override
+  public int getDefence() {
+    var playerDefence = super.getDefence();
+    var armorDefence = inventory.getEquippedArmor().getDef();
+    return playerDefence + armorDefence;
+  }
+
+  @Override
+  public int getAvgDmg() {
+    var playerDamage = super.getAvgDmg();
+    var weaponDamage = inventory.getEquippedWeapon().getDmg();
+    return playerDamage + weaponDamage;
+  }
+
 }

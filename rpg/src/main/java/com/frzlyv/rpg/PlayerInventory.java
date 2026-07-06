@@ -55,8 +55,22 @@ public class PlayerInventory {
   public void addItem(Item item) {
     if (item instanceof Weapon weapon) {
       this.weapons.add(weapon);
+      if (weapon.getDmg() > equippedWeapon.getDmg()) {
+        equipItem(item);
+      }
     } else if (item instanceof Armor armor) {
       this.armors.add(armor);
+      if (armor.getDef() > equippedArmor.getDef()) {
+        equipItem(item);
+      }
     }
+  }
+
+  public Weapon getEquippedWeapon() {
+    return this.equippedWeapon;
+  }
+
+  public Armor getEquippedArmor() {
+    return this.equippedArmor;
   }
 }

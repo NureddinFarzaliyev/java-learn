@@ -3,6 +3,7 @@ package com.frzlyv.rpg;
 import java.util.Random;
 
 import com.frzlyv.rpg.enums.CreatureType;
+import com.frzlyv.rpg.utils.StatScaler;
 
 /**
  * Creature
@@ -20,6 +21,7 @@ public class Creature {
   private int coins;
 
   private static final Random random = new Random();
+  private static final StatScaler scaler = new StatScaler();
 
   public Creature(String name, CreatureType type, int maxHP, int defence, int avgDmg, double critChance, int coins) {
     this.name = name;
@@ -40,21 +42,21 @@ public class Creature {
     String[] enemyNames = { "Goblin", "Orc", "Skeleton", "Thief" };
     this.name = enemyNames[random.nextInt(enemyNames.length)];
 
-    this.maxHP = scaleStat(player.getMaxHP(), 0.75, 1.15);
+    this.maxHP = scaler.scaleStat(player.getMaxHP(), 0.75, 1.15);
     this.currentHP = this.maxHP;
-    this.avgDmg = scaleStat(player.getAvgDmg(), 0.80, 1.10);
-    this.defence = scaleStat(player.getDefence(), 0.75, 1.10);
+    this.avgDmg = scaler.scaleStat(player.getAvgDmg(), 0.80, 1.10);
+    this.defence = scaler.scaleStat(player.getDefence(), 0.75, 1.10);
     double rawCrit = player.getCritChance() * (0.8 + random.nextDouble() * 0.4);
     this.critChance = Math.min(0.25, Math.round(rawCrit * 100.0) / 100.0);
-    this.coins = scaleStat(player.getCoins() / 5 + 5, 0.9, 1.2);
+    this.coins = scaler.scaleStat(player.getCoins() / 5 + 5, 0.9, 1.2);
   }
 
   @Override
   public String toString() {
     var before = "===== " + (type == CreatureType.ENEMY ? "Enemy" : "Player") + " Statistics =====";
     var after = "=============================";
-    var stats = "- Name: " + name + "\n- HP: " + currentHP + "/" + maxHP + "\n- DEF: " + defence + "\n- DMG: " + avgDmg
-        + "\n- Crit: " + critChance + "\n- Coins: " + coins;
+    var stats = "- Name: " + name + "\n- HP: " + currentHP + "/" + maxHP + "\n- DEF: " + this.getDefence() + "\n- DMG: "
+        + this.getAvgDmg() + "\n- Crit: " + critChance + "\n- Coins: " + coins;
 
     return before + "\n" + stats + "\n" + after;
   }
@@ -102,7 +104,7 @@ public class Creature {
 
   public void consumeAttack(int incomingDmg, BattleEngine battle) {
     int prevHp = currentHP;
-    int dmgAfterDef = Math.max(1, incomingDmg - defence);
+    int dmgAfterDef = Math.max(1, incomingDmg - this.getDefence());
     currentHP = Math.max(0, currentHP - dmgAfterDef);
     System.out.println("-> " + type + " Damaged: " + prevHp + " -> " + currentHP);
     if (currentHP <= 0 && battle != null) {
@@ -114,17 +116,13 @@ public class Creature {
     int dmg;
 
     if (isCrit()) {
-      dmg = (int) Math.round(avgDmg * 1.1);
+      dmg = (int) Math.round(this.getAvgDmg() * 1.1);
     } else {
-      dmg = avgDmg;
+      dmg = this.getAvgDmg();
     }
 
     System.out.println("-> " + " Attacking to " + creature.type + ": " + dmg);
     creature.consumeAttack(dmg, battle);
   }
 
-  private int scaleStat(int baseValue, double minMultiplier, double maxMultiplier) {
-    double multiplier = minMultiplier + (maxMultiplier - minMultiplier) * random.nextDouble();
-    return (int) Math.max(1, Math.round(baseValue * multiplier));
-  }
 }

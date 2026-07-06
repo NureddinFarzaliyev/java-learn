@@ -13,6 +13,10 @@ public class Armor extends Item {
     this.def = def;
   }
 
+  public int getDef() {
+    return this.def;
+  }
+
   @Override
   public String toString() {
     return super.toString() + " [" + def + " DEF]";

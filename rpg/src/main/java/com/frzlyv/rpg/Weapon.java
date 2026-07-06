@@ -13,6 +13,10 @@ public class Weapon extends Item {
     this.dmg = dmg;
   }
 
+  public int getDmg() {
+    return this.dmg;
+  }
+
   @Override
   public String toString() {
     return super.toString() + " [" + dmg + " DMG]";
