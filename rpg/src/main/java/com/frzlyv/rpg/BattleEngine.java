@@ -1,6 +1,5 @@
 package com.frzlyv.rpg;
 
-import com.frzlyv.rpg.enums.CreatureType;
 import com.frzlyv.rpg.enums.Screen;
 
 /**
@@ -13,7 +12,7 @@ public class BattleEngine {
 
   public BattleEngine(GameContext context) {
     this.context = context;
-    this.creature = new Creature("Test Enemy", CreatureType.ENEMY, 100, 10, 10, 0.01, 200);
+    this.creature = new Creature(context);
   }
 
   @Override
@@ -36,8 +35,12 @@ public class BattleEngine {
 
   public void endBattle() {
     System.out.println("Battle ended");
-    if (creature.getCurrentHP() <= 0) {
+    if (creature.getCurrentHP() <= 0 && context.getPlayer().getCurrentHP() <= 0) {
+      System.out.println("Draw!!!");
+    } else if (creature.getCurrentHP() <= 0) {
       System.out.println("Player Won!!!");
+      System.out.println("+" + creature.getCoins() + " coins");
+      context.getPlayer().increaseCoins(creature.getCoins());
     } else {
       System.out.println("Player Lost!!!");
     }

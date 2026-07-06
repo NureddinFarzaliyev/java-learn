@@ -19,6 +19,8 @@ public class Creature {
   private double critChance;
   private int coins;
 
+  private static final Random random = new Random();
+
   public Creature(String name, CreatureType type, int maxHP, int defence, int avgDmg, double critChance, int coins) {
     this.name = name;
     this.maxHP = maxHP;
@@ -28,6 +30,23 @@ public class Creature {
     this.type = type;
     this.defence = defence;
     this.coins = coins;
+  }
+
+  public Creature(GameContext context) {
+    var player = context.getPlayer();
+
+    this.type = CreatureType.ENEMY;
+
+    String[] enemyNames = { "Goblin", "Orc", "Skeleton", "Thief" };
+    this.name = enemyNames[random.nextInt(enemyNames.length)];
+
+    this.maxHP = scaleStat(player.getMaxHP(), 0.75, 1.15);
+    this.currentHP = this.maxHP;
+    this.avgDmg = scaleStat(player.getAvgDmg(), 0.80, 1.10);
+    this.defence = scaleStat(player.getDefence(), 0.75, 1.10);
+    double rawCrit = player.getCritChance() * (0.8 + random.nextDouble() * 0.4);
+    this.critChance = Math.min(0.25, Math.round(rawCrit * 100.0) / 100.0);
+    this.coins = scaleStat(player.getCoins() / 5 + 5, 0.9, 1.2);
   }
 
   @Override
@@ -56,17 +75,28 @@ public class Creature {
     return currentHP;
   }
 
-  public int getMaxHP() {
-    return maxHP;
-  }
-
   public void setCurrentHP(int amount) {
     this.currentHP = amount;
   }
 
+  public int getMaxHP() {
+    return maxHP;
+  }
+
+  public int getAvgDmg() {
+    return this.avgDmg;
+  }
+
+  public int getDefence() {
+    return this.defence;
+  }
+
+  public double getCritChance() {
+    return this.critChance;
+  }
+
   public boolean isCrit() {
-    var r = new Random();
-    double rDouble = r.nextDouble();
+    double rDouble = random.nextDouble();
     return critChance >= rDouble;
   }
 
@@ -75,7 +105,7 @@ public class Creature {
     int dmgAfterDef = Math.max(1, incomingDmg - defence);
     currentHP = Math.max(0, currentHP - dmgAfterDef);
     System.out.println("-> " + type + " Damaged: " + prevHp + " -> " + currentHP);
-    if (currentHP <= 0) {
+    if (currentHP <= 0 && battle != null) {
       battle.endBattle();
     }
   }
@@ -91,5 +121,10 @@ public class Creature {
 
     System.out.println("-> " + " Attacking to " + creature.type + ": " + dmg);
     creature.consumeAttack(dmg, battle);
+  }
+
+  private int scaleStat(int baseValue, double minMultiplier, double maxMultiplier) {
+    double multiplier = minMultiplier + (maxMultiplier - minMultiplier) * random.nextDouble();
+    return (int) Math.max(1, Math.round(baseValue * multiplier));
   }
 }

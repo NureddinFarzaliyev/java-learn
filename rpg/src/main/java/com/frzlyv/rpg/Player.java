@@ -29,4 +29,8 @@ public class Player extends Creature {
   public void decreaseCoins(int amount) {
     setCoins(Math.max(getCoins() - amount, 0));
   }
+
+  public void increaseCoins(int amount) {
+    setCoins(getCoins() + amount);
+  }
 }
