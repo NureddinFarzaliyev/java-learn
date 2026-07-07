@@ -52,3 +52,36 @@ services:
     environment:
       POSTGRES_PASSWORD: temppassword
 ```
+
+## Creating Schema in PostgreSQL
+
+In `main/resources`, `schema.sql` and `data.sql` files are used to initialize schema and insert data.
+
+Example:
+
+```sql schema.sql
+DROP TABLE IF EXISTS widgets;
+
+DROP SEQUENCE IF EXISTS widgets_id_seq;
+CREATE SEQUENCE widgets_id_seq INCREMENT 1 MINVALUE 1 CACHE 1;
+
+CREATE TABLE widgets (
+  id bigint DEFAULT nextval('widgets_id_seq') NOT NULL,
+  name text,
+  purpose text,
+  CONSTRAINT widgets_pkey PRIMARY KEY (id)
+);
+```
+
+```sql data.sql
+INSERT INTO widgets (id, name, purpose) VALUES
+(1, 'Widget 1', 'First Widget'),
+(2, 'Widget 2', 'Second Widget'),
+(3, 'Widget 3', 'Third Widget');
+```
+
+Then, following property is used in `application.properties`
+
+```application.properties
+spring.sql.init.mode=always
+```
