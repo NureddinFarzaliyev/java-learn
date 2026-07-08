@@ -34,7 +34,7 @@ public class TestDataUtil {
         .builder()
         .isbn("123-456")
         .title("Test Book")
-        .authorId(1L)
+        // .authorId(1L)
         .build();
   }
 
@@ -43,7 +43,7 @@ public class TestDataUtil {
         .builder()
         .isbn("321-654")
         .title("Test Book 2")
-        .authorId(1L)
+        // .authorId(1L)
         .build();
   }
 }
