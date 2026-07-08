@@ -85,3 +85,11 @@ Then, following property is used in `application.properties`
 ```application.properties
 spring.sql.init.mode=always
 ```
+
+### DAO - Data Access Object
+
+Extra layer between service layer and persistence layer.
+Services use DAO functionalities to communicate with persistence layer.
+
+Firstly, in `domain` folder, Java object mappings of the database schemas are created.
+Then, in `dao` folder, interfaces and implementations for dao classes are created.
