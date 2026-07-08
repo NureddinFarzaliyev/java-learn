@@ -77,4 +77,16 @@ public class BookDaoImplIntegrationTests {
     assertThat(result.get()).isEqualTo(book2);
   }
 
+  @Test
+  public void testThatBookCanBeDeleted() {
+    Author author = TestDataUtil.createTestAuthor();
+    authorDao.create(author);
+    Book book = TestDataUtil.createTestBook();
+    book.setAuthorId(author.getId());
+    underTest.create(book);
+    underTest.delete(book.getIsbn());
+    Optional<Book> result = underTest.findOne(book.getIsbn());
+    assertThat(result).isEmpty();
+  }
+
 }
