@@ -84,4 +84,17 @@ public class AuthorRepositoryIntegrationTests {
 
   }
 
+  @Test
+  public void testThatAuthorsWithAgeGreaterThan() {
+    Author author1 = TestDataUtil.createTestAuthor();
+    underTest.save(author1);
+    Author author2 = TestDataUtil.createTestAuthor2();
+    underTest.save(author2);
+
+    // Purposefully given strange name so Spring Boot does not
+    // create implementation
+    // Instead, HQL is used in interface
+    Iterable<Author> results = underTest.findThoseWithTheAgeGreaterThan(25);
+  }
+
 }
