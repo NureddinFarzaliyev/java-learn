@@ -41,6 +41,15 @@ public class BookDaoImpl implements BookDao {
 
   }
 
+  @Override
+  public List<Book> find() {
+    List<Book> results = jdbcTemplate.query(
+        "SELECT isbn, title, author_id FROM books",
+        new BookRowMapper());
+
+    return results;
+  }
+
   public class BookRowMapper implements RowMapper<Book> {
     @Override
     public Book mapRow(ResultSet rs, int rowNum) throws SQLException {

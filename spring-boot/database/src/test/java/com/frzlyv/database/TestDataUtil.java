@@ -20,6 +20,15 @@ public class TestDataUtil {
         .build();
   }
 
+  public static Author createTestAuthor2() {
+    return Author
+        .builder()
+        .id(2L)
+        .name("Alex Doe")
+        .age(30)
+        .build();
+  }
+
   public static Book createTestBook() {
     return Book
         .builder()
@@ -27,6 +36,14 @@ public class TestDataUtil {
         .title("Test Book")
         .authorId(1L)
         .build();
+  }
 
+  public static Book createTestBook2() {
+    return Book
+        .builder()
+        .isbn("321-654")
+        .title("Test Book 2")
+        .authorId(1L)
+        .build();
   }
 }
