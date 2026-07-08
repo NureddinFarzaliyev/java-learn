@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import com.frzlyv.database.dao.AuthorDao;
 import com.frzlyv.database.domain.Author;
@@ -14,6 +15,7 @@ import com.frzlyv.database.domain.Author;
 /**
  * AuthorDaoImpl
  */
+@Component
 public class AuthorDaoImpl implements AuthorDao {
 
   private final JdbcTemplate jdbcTemplate;
