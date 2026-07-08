@@ -15,7 +15,7 @@ import com.frzlyv.database.TestDataUtil;
 import com.frzlyv.database.domain.Book;
 
 /**
- * AuthorDaoImplTests
+ * BookDaoImplTests
  */
 @ExtendWith(MockitoExtension.class)
 public class BookDaoImplTests {
@@ -56,4 +56,13 @@ public class BookDaoImplTests {
         ArgumentMatchers.<BookDaoImpl.BookRowMapper>any());
   }
 
+  @Test
+  public void testThatUpdateBookGeneratesCorrectSql() {
+    Book book = TestDataUtil.createTestBook();
+    underTest.update(book);
+
+    verify(jdbcTemplate).update(eq("UPDATE books SET title = ?, author_id = ? WHERE isbn = ?"),
+        eq(book.getTitle()), eq(book.getAuthorId()), eq(book.getIsbn()));
+
+  }
 }

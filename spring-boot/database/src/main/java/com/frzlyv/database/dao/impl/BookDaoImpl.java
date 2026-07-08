@@ -50,6 +50,12 @@ public class BookDaoImpl implements BookDao {
     return results;
   }
 
+  @Override
+  public void update(Book book) {
+    jdbcTemplate.update("UPDATE books SET title = ?, author_id = ? WHERE isbn = ?",
+        book.getTitle(), book.getAuthorId(), book.getIsbn());
+  }
+
   public class BookRowMapper implements RowMapper<Book> {
     @Override
     public Book mapRow(ResultSet rs, int rowNum) throws SQLException {

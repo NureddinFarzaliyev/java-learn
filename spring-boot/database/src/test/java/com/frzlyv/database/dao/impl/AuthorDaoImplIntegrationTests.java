@@ -50,4 +50,16 @@ public class AuthorDaoImplIntegrationTests {
         .containsExactly(author1, author2);
   }
 
+  @Test
+  public void testThatAuthorCanBeUpdatedAndRecalled() {
+    Author author1 = TestDataUtil.createTestAuthor();
+    underTest.create(author1);
+    Author author2 = TestDataUtil.createTestAuthor2();
+    author2.setId(author1.getId());
+    underTest.update(author2);
+    Optional<Author> result = underTest.findOne(author1.getId());
+    assertThat(result).isPresent();
+    assertThat(result.get()).isEqualTo(author2);
+  }
+
 }

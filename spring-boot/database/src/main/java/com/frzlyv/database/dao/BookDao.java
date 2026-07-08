@@ -10,10 +10,12 @@ import com.frzlyv.database.domain.Book;
  */
 public interface BookDao {
 
-  public void create(Book book);
+  void create(Book book);
 
-  public Optional<Book> findOne(String isbn);
+  Optional<Book> findOne(String isbn);
 
-  public List<Book> find();
+  List<Book> find();
+
+  void update(Book book);
 
 }

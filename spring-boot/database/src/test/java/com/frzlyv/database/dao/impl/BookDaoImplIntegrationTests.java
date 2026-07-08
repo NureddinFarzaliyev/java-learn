@@ -61,4 +61,20 @@ public class BookDaoImplIntegrationTests {
         .containsExactly(book1, book2);
   }
 
+  @Test
+  public void testThatBookCanBeUpdatedAndRecalled() {
+    Author author = TestDataUtil.createTestAuthor();
+    authorDao.create(author);
+    Book book1 = TestDataUtil.createTestBook();
+    book1.setAuthorId(author.getId());
+    underTest.create(book1);
+    Book book2 = TestDataUtil.createTestBook2();
+    book2.setIsbn(book1.getIsbn());
+    book2.setAuthorId(book1.getAuthorId());
+    underTest.update(book2);
+    Optional<Book> result = underTest.findOne(book1.getIsbn());
+    assertThat(result).isPresent();
+    assertThat(result.get()).isEqualTo(book2);
+  }
+
 }
