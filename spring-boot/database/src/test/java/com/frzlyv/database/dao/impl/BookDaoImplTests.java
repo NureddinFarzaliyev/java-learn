@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -38,6 +39,16 @@ public class BookDaoImplTests {
     verify(jdbcTemplate).update(eq("INSERT INTO books (isbn, title, author_id) VALUES (?,?,?)"),
         eq(book.getIsbn()), eq(book.getTitle()), eq(book.getAuthorId()));
 
+  }
+
+  @Test
+  public void testThatFindOneBookGeneratesCorrectSql() {
+    underTest.findOne("123-456");
+
+    verify(jdbcTemplate).query(
+        eq("SELECT isbn, title, author_id FROM books WHERE isbn = ?"),
+        ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
+        eq("123-456"));
   }
 
 }
