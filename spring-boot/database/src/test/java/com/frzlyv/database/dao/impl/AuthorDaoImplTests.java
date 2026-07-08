@@ -1,4 +1,4 @@
-package com.frzlyv.database.dao;
+package com.frzlyv.database.dao.impl;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.eq;
@@ -10,34 +10,33 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.frzlyv.database.dao.impl.BookDaoImpl;
-import com.frzlyv.database.domain.Book;
+import com.frzlyv.database.domain.Author;
 
 /**
  * AuthorDaoImplTests
  */
 @ExtendWith(MockitoExtension.class)
-public class BookDaoImplTests {
+public class AuthorDaoImplTests {
 
   @Mock
   private JdbcTemplate jdbcTemplate;
 
   @InjectMocks
-  private BookDaoImpl underTest;
+  private AuthorDaoImpl underTest;
 
   @Test
   public void testThatCreateAuthorGeneratesCorrectSql() {
-    Book book = Book
+    Author author = Author
         .builder()
-        .isbn("123-456")
-        .title("Test Book")
-        .authorId(1L)
+        .id(1L)
+        .name("John Doe")
+        .age(20)
         .build();
 
-    underTest.create(book);
+    underTest.create(author);
 
-    verify(jdbcTemplate).update(eq("INSERT INTO books (isbn, title, author_id) VALUES (?,?,?)"),
-        eq(book.getIsbn()), eq(book.getTitle()), eq(book.getAuthorId()));
+    verify(jdbcTemplate).update(eq("INSERT INTO authors (id, name, age) VALUES (?, ?, ?)"),
+        eq(author.getId()), eq(author.getName()), eq(author.getAge()));
 
   }
 
