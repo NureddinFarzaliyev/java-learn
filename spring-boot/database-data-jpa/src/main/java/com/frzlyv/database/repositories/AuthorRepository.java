@@ -11,4 +11,6 @@ import com.frzlyv.database.domain.Author;
 @Repository
 public interface AuthorRepository extends CrudRepository<Author, Long> {
 
+  Iterable<Author> ageLessThan(int i);
+
 }
