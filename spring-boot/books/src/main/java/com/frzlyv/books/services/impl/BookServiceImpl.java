@@ -3,6 +3,8 @@ package com.frzlyv.books.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.frzlyv.books.domain.entities.BookEntity;
@@ -29,6 +31,11 @@ public class BookServiceImpl implements BookService {
   @Override
   public List<BookEntity> listAll() {
     return bookRepository.findAll();
+  }
+
+  @Override
+  public Page<BookEntity> listAll(Pageable pageable) {
+    return bookRepository.findAll(pageable);
   }
 
   @Override

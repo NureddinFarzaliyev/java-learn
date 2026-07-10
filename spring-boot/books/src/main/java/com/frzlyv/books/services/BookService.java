@@ -3,6 +3,9 @@ package com.frzlyv.books.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.frzlyv.books.domain.entities.BookEntity;
 
 /**
@@ -11,6 +14,8 @@ import com.frzlyv.books.domain.entities.BookEntity;
 public interface BookService {
 
   BookEntity createBook(BookEntity book);
+
+  Page<BookEntity> listAll(Pageable pageable);
 
   List<BookEntity> listAll();
 

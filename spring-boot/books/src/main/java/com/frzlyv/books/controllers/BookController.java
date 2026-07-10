@@ -3,6 +3,8 @@ package com.frzlyv.books.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,11 +48,9 @@ public class BookController {
   }
 
   @GetMapping("/books")
-  public List<BookDto> listBooks() {
-    List<BookEntity> bookEntities = bookService.listAll();
-    return bookEntities.stream()
-        .map(bookMapper::toDto)
-        .collect(Collectors.toList());
+  public Page<BookDto> listBooks(Pageable pageable) {
+    Page<BookEntity> bookEntities = bookService.listAll(pageable);
+    return bookEntities.map(bookMapper::toDto);
   }
 
   @GetMapping("/books/{isbn}")
