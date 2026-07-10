@@ -16,4 +16,6 @@ public interface BookService {
 
   Optional<BookEntity> findOne(String isbn);
 
+  Boolean isExists(String isbn);
+
 }

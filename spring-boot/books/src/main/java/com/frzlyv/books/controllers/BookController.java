@@ -32,10 +32,15 @@ public class BookController {
 
   @PutMapping("/books/{isbn}")
   public ResponseEntity<BookDto> createAuthor(@PathVariable("isbn") String isbn, @RequestBody BookDto bodyBook) {
+    Boolean exists = bookService.isExists(isbn);
     BookEntity bookEntity = bookMapper.toEntity(bodyBook);
     BookEntity savedBookEntity = bookService.createBook(bookEntity);
     BookDto responseBook = bookMapper.toDto(savedBookEntity);
-    return new ResponseEntity<>(responseBook, HttpStatus.CREATED);
+    if (exists) {
+      return new ResponseEntity<>(responseBook, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(responseBook, HttpStatus.CREATED);
+    }
   }
 
   @GetMapping("/books")
@@ -53,5 +58,4 @@ public class BookController {
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.notFound().build());
   }
-
 }

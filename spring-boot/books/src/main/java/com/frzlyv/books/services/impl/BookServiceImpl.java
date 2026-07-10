@@ -36,4 +36,9 @@ public class BookServiceImpl implements BookService {
     return bookRepository.findById(isbn);
   }
 
+  @Override
+  public Boolean isExists(String isbn) {
+    return bookRepository.existsById(isbn);
+  }
+
 }
