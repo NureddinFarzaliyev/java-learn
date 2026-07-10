@@ -1,8 +1,6 @@
 package com.frzlyv.books.services.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
@@ -29,11 +27,7 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public List<BookEntity> listAll() {
-    return StreamSupport
-        .stream(bookRepository.findAll()
-            .spliterator(),
-            false)
-        .collect(Collectors.toList());
+    return bookRepository.findAll();
   }
 
 }
