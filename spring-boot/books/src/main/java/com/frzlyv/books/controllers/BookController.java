@@ -1,7 +1,11 @@
 package com.frzlyv.books.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +36,14 @@ public class BookController {
     BookEntity savedBookEntity = bookService.createBook(bookEntity);
     BookDto responseBook = bookMapper.toDto(savedBookEntity);
     return new ResponseEntity<>(responseBook, HttpStatus.CREATED);
+  }
 
+  @GetMapping("/books")
+  public List<BookDto> listAuthors() {
+    List<BookEntity> bookEntities = bookService.listAll();
+    return bookEntities.stream()
+        .map(bookMapper::toDto)
+        .collect(Collectors.toList());
   }
 
 }
