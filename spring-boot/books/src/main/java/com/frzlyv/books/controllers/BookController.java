@@ -39,11 +39,19 @@ public class BookController {
   }
 
   @GetMapping("/books")
-  public List<BookDto> listAuthors() {
+  public List<BookDto> listBooks() {
     List<BookEntity> bookEntities = bookService.listAll();
     return bookEntities.stream()
         .map(bookMapper::toDto)
         .collect(Collectors.toList());
+  }
+
+  @GetMapping("/books/{isbn}")
+  public ResponseEntity<BookDto> findOneBook(@PathVariable String isbn) {
+    return bookService.findOne(isbn)
+        .map(bookMapper::toDto)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
 }

@@ -1,6 +1,7 @@
 package com.frzlyv.books.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.frzlyv.books.domain.entities.AuthorEntity;
 
@@ -12,5 +13,7 @@ public interface AuthorService {
   AuthorEntity create(AuthorEntity authorEntity);
 
   List<AuthorEntity> listAll();
+
+  Optional<AuthorEntity> findOne(Long id);
 
 }

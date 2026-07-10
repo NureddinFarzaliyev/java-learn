@@ -1,6 +1,7 @@
 package com.frzlyv.books.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,11 @@ public class BookServiceImpl implements BookService {
   @Override
   public List<BookEntity> listAll() {
     return bookRepository.findAll();
+  }
+
+  @Override
+  public Optional<BookEntity> findOne(String isbn) {
+    return bookRepository.findById(isbn);
   }
 
 }

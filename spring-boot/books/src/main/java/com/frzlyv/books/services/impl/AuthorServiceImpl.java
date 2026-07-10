@@ -1,6 +1,7 @@
 package com.frzlyv.books.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,11 @@ public class AuthorServiceImpl implements AuthorService {
   @Override
   public List<AuthorEntity> listAll() {
     return authorRepository.findAll();
+  }
+
+  @Override
+  public Optional<AuthorEntity> findOne(Long id) {
+    return authorRepository.findById(id);
   }
 
 }

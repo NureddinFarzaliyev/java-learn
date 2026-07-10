@@ -1,6 +1,7 @@
 package com.frzlyv.books.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.frzlyv.books.domain.entities.BookEntity;
 
@@ -12,5 +13,7 @@ public interface BookService {
   BookEntity createBook(BookEntity book);
 
   List<BookEntity> listAll();
+
+  Optional<BookEntity> findOne(String isbn);
 
 }
