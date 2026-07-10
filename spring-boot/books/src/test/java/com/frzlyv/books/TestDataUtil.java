@@ -31,6 +31,12 @@ public class TestDataUtil {
         .build();
   }
 
+  public static AuthorDto createTestPartialAuthorDto() {
+    return AuthorDto.builder()
+        .name("Partial Updated")
+        .build();
+  }
+
   public static BookEntity createTestBookEntity(AuthorEntity author) {
     return BookEntity.builder()
         .isbn("123-456")
@@ -52,6 +58,12 @@ public class TestDataUtil {
         .isbn("456-123")
         .title("Test Book 2")
         .author(author)
+        .build();
+  }
+
+  public static BookDto createTestPartialBookDto(AuthorDto author) {
+    return BookDto.builder()
+        .title("Partial Changed")
         .build();
   }
 

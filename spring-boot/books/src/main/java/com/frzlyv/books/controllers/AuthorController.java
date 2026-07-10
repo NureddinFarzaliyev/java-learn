@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -67,6 +68,21 @@ public class AuthorController {
     AuthorEntity updatedEntity = authorService.create(authorEntity);
     AuthorDto responseDto = authorMapper.toDto(updatedEntity);
     return new ResponseEntity<>(responseDto, HttpStatus.OK);
+  }
+
+  @PatchMapping(path = "/authors/{id}")
+  public ResponseEntity<AuthorDto> partialUpdate(
+      @PathVariable("id") Long id,
+      @RequestBody AuthorDto authorDto) {
+    if (!authorService.isExists(id)) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    AuthorEntity authorEntity = authorMapper.toEntity(authorDto);
+    AuthorEntity updatedAuthor = authorService.partialUpdate(id, authorEntity);
+    return new ResponseEntity<>(
+        authorMapper.toDto(updatedAuthor),
+        HttpStatus.OK);
   }
 
 }
