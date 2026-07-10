@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.frzlyv.books.TestDataUtil;
+import com.frzlyv.books.domain.dto.AuthorDto;
 import com.frzlyv.books.domain.entities.AuthorEntity;
 
 import tools.jackson.databind.ObjectMapper;
@@ -38,7 +39,7 @@ public class AuthorControllerIntegrationTests {
   @Test
   public void testThatCreateAuthorReturnsHttp201Created() throws Exception {
 
-    AuthorEntity testAuthor = TestDataUtil.createTestAuthorEntity();
+    AuthorDto testAuthor = TestDataUtil.createTestAuthorDto();
     String authorJson = objectMapper.writeValueAsString(testAuthor);
 
     mockMvc.perform(
@@ -52,7 +53,7 @@ public class AuthorControllerIntegrationTests {
   @Test
   public void testThatCreateAuthorReturnsSavedAuthor() throws Exception {
 
-    AuthorEntity testAuthor = TestDataUtil.createTestAuthorEntity();
+    AuthorDto testAuthor = TestDataUtil.createTestAuthorDto();
     String authorJson = objectMapper.writeValueAsString(testAuthor);
 
     mockMvc.perform(

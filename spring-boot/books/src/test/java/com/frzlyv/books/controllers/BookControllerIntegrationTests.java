@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.frzlyv.books.TestDataUtil;
-import com.frzlyv.books.domain.entities.BookEntity;
+import com.frzlyv.books.domain.dto.BookDto;
 
 import tools.jackson.databind.ObjectMapper;
 
@@ -38,7 +38,7 @@ public class BookControllerIntegrationTests {
   @Test
   public void testThatCreateBookReturnsHttp201Created() throws Exception {
 
-    BookEntity testBook = TestDataUtil.createTestBookEntity();
+    BookDto testBook = TestDataUtil.createTestBookDto(null);
     String bookJson = objectMapper.writeValueAsString(testBook);
 
     mockMvc.perform(
@@ -52,7 +52,7 @@ public class BookControllerIntegrationTests {
   @Test
   public void testThatCreateBookReturnsSavedBook() throws Exception {
 
-    BookEntity testBook = TestDataUtil.createTestBookEntity();
+    BookDto testBook = TestDataUtil.createTestBookDto(null);
     String bookJson = objectMapper.writeValueAsString(testBook);
 
     mockMvc.perform(
