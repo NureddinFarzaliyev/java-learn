@@ -13,58 +13,56 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.frzlyv.books.TestDataUtil;
-import com.frzlyv.books.domain.entities.AuthorEntity;
+import com.frzlyv.books.domain.entities.BookEntity;
 
 import tools.jackson.databind.ObjectMapper;
 
 /**
- * AuthorControllerIntegrationTests
+ * BookControllerIntegrationTests
  */
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-public class AuthorControllerIntegrationTests {
+public class BookControllerIntegrationTests {
 
   private MockMvc mockMvc;
   private ObjectMapper objectMapper;
 
-  public AuthorControllerIntegrationTests(MockMvc mockMvc) {
+  public BookControllerIntegrationTests(MockMvc mockMvc) {
     this.mockMvc = mockMvc;
     this.objectMapper = new ObjectMapper();
   }
 
   @Test
-  public void testThatCreateAuthorReturnsHttp201Created() throws Exception {
+  public void testThatCreateBookReturnsHttp201Created() throws Exception {
 
-    AuthorEntity testAuthor = TestDataUtil.createTestAuthorEntity();
-    String authorJson = objectMapper.writeValueAsString(testAuthor);
+    BookEntity testBook = TestDataUtil.createTestBookEntity();
+    String bookJson = objectMapper.writeValueAsString(testBook);
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/authors")
+        MockMvcRequestBuilders.put("/books/" + testBook.getIsbn())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(authorJson))
+            .content(bookJson))
         .andExpect(
             MockMvcResultMatchers.status().isCreated());
   }
 
   @Test
-  public void testThatCreateAuthorReturnsSavedAuthor() throws Exception {
+  public void testThatCreateBookReturnsSavedBook() throws Exception {
 
-    AuthorEntity testAuthor = TestDataUtil.createTestAuthorEntity();
-    String authorJson = objectMapper.writeValueAsString(testAuthor);
+    BookEntity testBook = TestDataUtil.createTestBookEntity();
+    String bookJson = objectMapper.writeValueAsString(testBook);
 
     mockMvc.perform(
-        MockMvcRequestBuilders.post("/authors")
+        MockMvcRequestBuilders.put("/books/" + testBook.getIsbn())
             .contentType(MediaType.APPLICATION_JSON)
-            .content(authorJson))
+            .content(bookJson))
         .andExpect(
-            MockMvcResultMatchers.jsonPath("$.id").isNumber())
+            MockMvcResultMatchers.jsonPath("$.isbn").value(testBook.getIsbn()))
         .andExpect(
-            MockMvcResultMatchers.jsonPath("$.name").value(testAuthor.getName()))
-        .andExpect(
-            MockMvcResultMatchers.jsonPath("$.age").value(testAuthor.getAge()));
+            MockMvcResultMatchers.jsonPath("$.title").value(testBook.getTitle()));
 
   }
 
