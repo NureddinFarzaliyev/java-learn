@@ -191,4 +191,39 @@ public class BookControllerIntegrationTests {
             MockMvcResultMatchers.jsonPath("$.title").value(testBookChanged.getTitle()));
   }
 
+  @Test
+  public void testThatDeleteBookReturnsHttp404NotFound() throws Exception {
+    mockMvc.perform(
+        MockMvcRequestBuilders.delete("/books/99")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isNotFound());
+  }
+
+  @Test
+  public void testThatDeleteBookReturnsHttp204NoContent() throws Exception {
+    BookEntity testBook = TestDataUtil.createTestBookEntity(null);
+    bookService.createBook(testBook);
+
+    mockMvc.perform(
+        MockMvcRequestBuilders.delete("/books/" + testBook.getIsbn())
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void testThatDeleteBookDeletesBook() throws Exception {
+    BookEntity testBook = TestDataUtil.createTestBookEntity(null);
+    BookEntity savedBook = bookService.createBook(testBook);
+
+    mockMvc.perform(
+        MockMvcRequestBuilders.delete("/books/" + savedBook.getIsbn())
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+    mockMvc.perform(
+        MockMvcRequestBuilders.get("/books/" + savedBook.getIsbn())
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isNotFound());
+  }
+
 }
