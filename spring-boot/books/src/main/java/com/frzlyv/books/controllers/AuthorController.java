@@ -1,5 +1,7 @@
 package com.frzlyv.books.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +26,11 @@ public class AuthorController {
   }
 
   @PostMapping("/authors")
-  public AuthorDto createAuthor(@RequestBody AuthorDto bodyAuthor) {
+  public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto bodyAuthor) {
     AuthorEntity authorEntity = authorMapper.toEntity(bodyAuthor);
     AuthorEntity resultAuthorEntity = authorService.create(authorEntity);
-    return authorMapper.toDto(resultAuthorEntity);
+    AuthorDto responseAuthorDto = authorMapper.toDto(resultAuthorEntity);
+    return new ResponseEntity<>(responseAuthorDto, HttpStatus.CREATED);
   }
 
 }
